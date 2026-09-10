@@ -1,10 +1,10 @@
-name : 02-Workflow-Events
+name: 02-Workflow-Events
 
-on :
+on:
   push:
   pull_request:
   schedule:
-    - cron: /5 * * * THU
+    - cron: "/5 * * * THU"
   workflow_dispatch:
 
 
