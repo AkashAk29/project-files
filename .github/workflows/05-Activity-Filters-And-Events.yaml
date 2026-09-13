@@ -3,8 +3,8 @@ name: 05-Activity-Filters-And-Events
 on:
   pull_request:
     types:
-      - opened
-      - synchronize
+      - closed
+
     branches:
       - master
 
