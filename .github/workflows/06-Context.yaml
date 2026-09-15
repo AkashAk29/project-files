@@ -1,9 +1,6 @@
 name: 06 - Contexts
 run-name: 06 - Contexts  |  DEBUG - ${{inputs.debug}}
 on:
-  push:
-    branches: master
-
   workflow_dispatch:
     inputs:
       debug:
