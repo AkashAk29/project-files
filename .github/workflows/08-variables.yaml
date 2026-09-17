@@ -26,4 +26,11 @@ jobs:
           echo "Workflow variable: ${{env.Workflow_var}}"
           echo "Overwritten Variable: ${{env.var_overwrite}}"
 
-          
+      - name: print env from workflow level
+        run: |
+          echo "Overwritten Variable: ${{env.var_overwrite}}"
+
+
+
+
+
