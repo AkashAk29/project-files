@@ -13,15 +13,13 @@ jobs:
       - name: PR labels
         run: |
           cat << EOF
-          ${{ toJSON(github.event.pull_request.label) }}
+          ${{ toJSON(github.event.pull_request.labels) }}
           EOF
 
       - name: Bug step
         if: ${{ !cancelled() && contains(github.event.pull_request.title, 'fix') }}
         run: echo "I am a bug fix"
 
-      - name: sleep step
-        run: sleep 10
       - name: Failing step
         run: exit 1
       - name: Success Check
