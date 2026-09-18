@@ -11,6 +11,7 @@ env:
 jobs:
   task1:
     runs-on: ubuntu-latest
+
     env:
       JOB_VAR: 'I am a job env var'
       var_overwrite: "I exist at the job level"
@@ -20,17 +21,42 @@ jobs:
         env:
           STEP_VAR: 'I am a step env var'
           Step_var_2: 'I am also an env var'
+
         run: |
-          echo "Step env var: ${{env.STEP_VAR}}"
+          echo "Step env var: ${{ env.STEP_VAR }}"
           echo "Step env var 2: $step_var_2"
-          echo "Workflow variable: ${{env.Workflow_var}}"
-          echo "Overwritten Variable: ${{env.var_overwrite}}"
+          echo "Workflow variable: ${{ env.Workflow_var }}"
+          echo "Overwritten Variable: ${{ env.var_overwrite }}"
 
       - name: print env from workflow level
         run: |
-          echo "Overwritten Variable: ${{env.var_overwrite}}"
+          echo "Overwritten Variable: ${{ env.var_overwrite }}"
+
+
+  task2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print repo variables
+        run: |
+          echo "Name Repo Variable: ${{ vars.MY_TEST_VAR }}"
+          echo "Random repo var: ${{ vars.REPOSITORY_VAR }}"
+
+  staging environment echo:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: print staging environment
+        run: |
+          echo "env variable: ${{vars.TARGET_VAR}}"
+
+          
+          
+   
+     
+          
 
 
 
 
-
+          
