@@ -1,7 +1,6 @@
 name: 08 - Environment-variables
 
 on:
-  push:
   workflow_dispatch:
 
 env:
@@ -42,7 +41,7 @@ jobs:
           echo "Name Repo Variable: ${{ vars.MY_TEST_VAR }}"
           echo "Random repo var: ${{ vars.REPOSITORY_VAR }}"
 
-  staging environment echo:
+  staging-environment-echo:
     runs-on: ubuntu-latest
     environment: staging
     steps:
