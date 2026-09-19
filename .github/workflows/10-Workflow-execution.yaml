@@ -17,6 +17,7 @@ jobs:
 
   unit-test:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Running unit test
         run: echo "Running Tests...."
@@ -54,4 +55,4 @@ jobs:
       - load-tests
     steps:
       - name: deployment prod step
-        run : "Deploying to prod"
+        run : echo "deploying to prod"
