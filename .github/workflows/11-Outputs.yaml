@@ -21,7 +21,13 @@ jobs:
 
       - name: Build
         id: build
-        run: echo "status=${{inputs.status}}" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "$GITHUB_OUTPUT"
+          echo "status=${{inputs.status}}" >> "$GITHUB_OUTPUT"
+          echo "output1=value1" >> "$GITHUB_OUTPUT"
+          echo "output2=value2" >> "$GITHUB_OUTPUT"
+          cat "$GGITHUB_OUTPUT"
+          
 
   deploy:
     runs-on: ubuntu-latest
