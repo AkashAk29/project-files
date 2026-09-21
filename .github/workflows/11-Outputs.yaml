@@ -26,7 +26,7 @@ jobs:
           echo "status=${{inputs.status}}" >> "$GITHUB_OUTPUT"
           echo "output1=value1" >> "$GITHUB_OUTPUT"
           echo "output2=value2" >> "$GITHUB_OUTPUT"
-          cat "$GGITHUB_OUTPUT"
+          cat "$GITHUB_OUTPUT"
           
 
   deploy:
