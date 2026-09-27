@@ -9,15 +9,41 @@ on:
         default: true
 
 jobs:
-  build:
+  Install-dependency:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: 13-caching/react-app
-    # 1. Checkout the code
-    # 2. Install dependencies
-    # 3. Unit testing and building
-    # 4. Deploy to a non-prod env
+    outputs:
+      deps-cache-key: ${{ steps.cache-key.outputs.CACHE_KEY }}
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+      - name: print cache key
+        id: cache-key
+        run: |
+          echo "CACHE_KEY=deps-node-modules-${{ hashFiles('13-caching/react-app/package-lock.json') }}" >> "$GITHUB_OUTPUT"
+      - name: Download cached dependencies
+        uses: actions/cache@v3
+        if: ${{inputs.use-cache}}
+        id: cache
+        with:
+          path: 13-caching/react-app/node_modules
+          key: ${{ steps.cache-key.outputs.CACHE_KEY }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+  linting:
+    runs-on: ubuntu-latest
+    needs: Install-dependency
+    defaults:
+      run:
+        working-directory: 13-caching/react-app
     steps:
       - name: checkout code
         uses: actions/checkout@v4
@@ -31,14 +57,35 @@ jobs:
         id: cache
         with:
           path: 13-caching/react-app/node_modules
-          key: deps-node-module-${{ hashFiles('13-caching/react-app/package-lock.json') }}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+          key: ${{ needs.Install-dependency.outputs.deps-cache-key }}
+      - name: Testing
+        run: npm run test
+      - name: linting
+        run: echo "Linting ....."
+
+  build:
+    runs-on: ubuntu-latest
+    needs: Install-dependency
+    defaults:
+      run:
+        working-directory: 13-caching/react-app
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+      - name: Download cached dependencies
+        uses: actions/cache@v3
+        if: ${{inputs.use-cache}}
+        id: cache
+        with:
+          path: 13-caching/react-app/node_modules
+          key: ${{ needs.Install-dependency.outputs.deps-cache-key }}
       - name: Testing
         run: npm run test
       - name: Building
         run: npm run build
-
       - name: Deployment
         run: echo "Deploying to non-prod"
