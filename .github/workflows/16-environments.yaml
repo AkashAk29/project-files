@@ -13,7 +13,9 @@ jobs:
     environment: ${{ inputs.target-env }}
     env:
       my-env-value: ${{ vars.MY_TEST_VAR || 'default_value' }}
+
     steps:
       - name: Echo vars
         run: |
-          echo "Env variable : ${{ env.my-env-value }}"
+          echo "My Repo variable : ${{ env.my-env-value }}"
+          echo "My Environment variable : ${{ inputs.target-env }}"
