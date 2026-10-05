@@ -18,4 +18,5 @@ jobs:
       - name: Echo vars
         run: |
           echo "My Repo variable : ${{ env.my-env-value }}"
-          echo "My Environment variable : ${{ inputs.target-env }}"
+          echo "My Environment branch : ${{ inputs.target-env }}"
+          echo "My env variable : ${{ vars.TARGET_VAR }}"
