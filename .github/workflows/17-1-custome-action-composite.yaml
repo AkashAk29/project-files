@@ -1,0 +1,25 @@
+name: 17 - Custom Actions - composite
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo code
+        uses: actions/checkout@v4
+
+      - name: Setup node and NPM dependency
+        uses: ./.github/actions/composite-workflow
+        with:
+          node-version: 20.x
+          working-dir: 17-custom-actions/react-app
+
+      - name: run test
+        run: npm run test
+        working-directory: 17-custom-actions/react-app
+
+      - name: Build
+        run: npm run build
+        working-directory: 17-custom-actions/react-app
